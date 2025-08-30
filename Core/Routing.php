@@ -11,13 +11,13 @@ class Routing
 
     public static function runController(): void
     {
-        
+
         $response = new Response();
 
         // Run path handlers
         static::runPathHandlerPoppers();
 
-        $defaultControllerClass = CoreSettings::appControllersDir."\\".CoreSettings::defaultController;
+        $defaultControllerClass = CoreSettings::appControllersDir . "\\" . CoreSettings::defaultController;
         $controllerClass = $defaultControllerClass;
         $theMethod = CoreSettings::defaultMethod;
         $theArguments = [];
@@ -25,30 +25,30 @@ class Routing
         $pathSegments = Request::getPathSegments();
         $pathSegmentCount = count($pathSegments);
 
-        $fileToCheck = App::getAbsoluteProjectPath().DS.CoreSettings::appDir.DS.CoreSettings::appControllersDir;
+        $fileToCheck = App::getAbsoluteProjectPath() . DS . CoreSettings::appDir . DS . CoreSettings::appControllersDir;
         $controllerToCheck = CoreSettings::appControllersDir;
 
-        for ($i=0; $i < $pathSegmentCount; $i++)
+        for ($i = 0; $i < $pathSegmentCount; $i++)
         {
-            $fileToCheck .= DS.$pathSegments[$i];
-            $controllerToCheck .= "\\".$pathSegments[$i];
+            $fileToCheck .= DS . $pathSegments[$i];
+            $controllerToCheck .= "\\" . $pathSegments[$i];
 
-            if(is_dir($fileToCheck))
+            if (is_dir($fileToCheck))
             {
                 continue;
             }
-            elseif(class_exists($controllerToCheck))
+            elseif (class_exists($controllerToCheck))
             {
                 // echo ($fileToCheck);
                 $controllerClass = $controllerToCheck;
-                if($i+1 < $pathSegmentCount)
+                if ($i + 1 < $pathSegmentCount)
                 {
-                    $theMethod = $pathSegments[$i+1];
+                    $theMethod = $pathSegments[$i + 1];
                     $i++;
                 }
-                if($i+1 < $pathSegmentCount)
+                if ($i + 1 < $pathSegmentCount)
                 {
-                    $theArguments = array_slice($pathSegments, $i+1);
+                    $theArguments = array_slice($pathSegments, $i + 1);
                 }
                 break;
             }
@@ -84,32 +84,32 @@ class Routing
      * This method can be used for path handling. Each registered function will be run before processing the path, by the registration order.
      * A registered path handler can access and modify the full path.
      */
-    public static function registerPathHandler(PathHandler $handler) : void
+    public static function registerPathHandler(PathHandler $handler): void
     {
         static::$pathHandlers[] = $handler;
     }
 
-    private static function runPathHandlerPoppers() : void
+    private static function runPathHandlerPoppers(): void
     {
         // while($h = array_shift(static::$pathHandlers))
         // {
         //     $h();
         // }
         $c = count(static::$pathHandlers);
-        for ($i=0; $i < $c; $i++)
+        for ($i = 0; $i < $c; $i++)
         {
             static::$pathHandlers[$i]->popper();
         }
     }
 
-    private static function runPathHandlerPushers(array $pathSegments) : array
+    private static function runPathHandlerPushers(array $pathSegments): array
     {
         $c = count(static::$pathHandlers);
-        for ($i=$c-1; $i <= 0; $i--)
+        for ($i = $c - 1; $i <= 0; $i--)
         {
             $segs = new static::$pathHandlers[$i]->pusher();
         }
-        
-        return array_merge($segs,$pathSegments);
+
+        return array_merge($segs, $pathSegments);
     }
 }

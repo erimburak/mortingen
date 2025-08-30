@@ -22,11 +22,11 @@ class Request
     /**
      * Returns $_GET.
      */
-    public static function getQueryAll() : array
+    public static function getQueryAll(): array
     {
         return $_GET;
     }
-    
+
     /**
      * Reads from $_POST.
      */
@@ -34,15 +34,15 @@ class Request
     {
         return $_POST[$key] ?? null;
     }
-    
+
     /**
      * Returns $_POST.
      */
-    public static function getDataAll() : array
+    public static function getDataAll(): array
     {
         return $_POST;
     }
-    
+
     /**
      * Reads from $_FILES.
      */
@@ -50,11 +50,11 @@ class Request
     {
         return $_FILES[$key] ?? null;
     }
-    
+
     /**
      * Returns $_FILES.
      */
-    public static function getFileAll() : array
+    public static function getFileAll(): array
     {
         return $_FILES;
     }
@@ -62,16 +62,16 @@ class Request
     /**
      * Returns the full path as a string.
      */
-    public static function getPath() : string
+    public static function getPath(): string
     {
-        if(is_null(static::$path))
+        if (is_null(static::$path))
         {
             $documentRoot = realpath($_SERVER['DOCUMENT_ROOT']);
             $scriptDir = realpath(dirname(dirname(__DIR__)));
 
             // Calculate the relative path of the project folder from the document root
             $baseFolder = str_replace($documentRoot, '', $scriptDir);
-            $baseFolder = str_replace('\\','/',$baseFolder);
+            $baseFolder = str_replace('\\', '/', $baseFolder);
             $baseFolder = trim($baseFolder, '/');
 
             // Get the current request URI
@@ -85,7 +85,7 @@ class Request
 
             static::$path = static::sanitizePath($relativePath ?? '');
         }
-        
+
         return static::$path;
     }
 
@@ -103,12 +103,12 @@ class Request
      * Example: `/person/3/item/123` becomes `['person', '3', 'item', '123']`
      * Runs the path handlers and removes them from the queue.
      */
-    public static function &getPathSegments() : array
+    public static function &getPathSegments(): array
     {
-        if(is_null(static::$pathSegments))
+        if (is_null(static::$pathSegments))
         {
             $path = static::getPath();
-            if(empty($path))
+            if (empty($path))
             {
                 static::$pathSegments = [];
             }
@@ -125,7 +125,7 @@ class Request
      * Get the first segment from the path.
      * This modifies the original array.
      */
-    public static function popPathSegment(?string $defaultValue = null) : ?string
+    public static function popPathSegment(?string $defaultValue = null): ?string
     {
         $pathSegments = &static::getPathSegments();
         $nextValue = array_shift($pathSegments) ?? $defaultValue;
@@ -136,20 +136,20 @@ class Request
      * Put an element at the beginning of the path.
      * This modifies the original array.
      */
-    public static function pushPathSegment(string $value) : void
+    public static function pushPathSegment(string $value): void
     {
         $pathSegments = &static::getPathSegments();
-        array_unshift($pathSegments,$value);
+        array_unshift($pathSegments, $value);
     }
 
     /**
      * Returns an element from path segments array by index.
      * If no element at the given index, returns null.
      */
-    public static function getArg(int $index) : ?string
+    public static function getArg(int $index): ?string
     {
         $pathSegments = static::getPathSegments();
-        if($index>=count($pathSegments))
+        if ($index >= count($pathSegments))
         {
             return null;
         }
@@ -158,8 +158,9 @@ class Request
 
     /**
      * Returns path segments as an array.
+     * Example: `/person/3/item/123` becomes `['person', '3', 'item', '123']`
      */
-    public static function getArgs() : array
+    public static function getArgs(): array
     {
         $pathSegments = static::getPathSegments();
         return $pathSegments;
@@ -170,7 +171,7 @@ class Request
      * Example: `/person/3/item/123` becomes `['person'=>'3', 'item'=>'123']`
      * If number of segments is odd, last key's value will be null.
      */
-    public static function getArgsAssoc() : array
+    public static function getArgsAssoc(): array
     {
         $array = static::getPathSegments();
         $assocArray = [];
@@ -201,7 +202,7 @@ class Request
     /**
      * Clean and sanitize the path info.
      */
-    public static function sanitizePath(string $path) : string
+    public static function sanitizePath(string $path): string
     {
         // Remove leading and trailing whitespace
         $path = trim($path);
@@ -215,9 +216,8 @@ class Request
 
         $path = filter_var($path, FILTER_SANITIZE_URL);
 
-        $path = trim($path,"/");
+        $path = trim($path, "/");
 
         return $path;
     }
-
 }

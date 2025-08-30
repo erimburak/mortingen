@@ -3,7 +3,7 @@
 use DB\Identifier;
 
 abstract class Model
-{    
+{
     abstract public static function setup();
     protected static bool $initialized = false;
     protected static bool $schema_is_handled = false;
@@ -13,7 +13,7 @@ abstract class Model
 
     public static function init(?DB\DB $db)
     {
-        if(!static::$initialized)
+        if (!static::$initialized)
         {
             static::$db = $db ?? DB\DB::$db;
 
@@ -24,7 +24,7 @@ abstract class Model
         }
     }
 
-    public static function table():Identifier
+    public static function table(): Identifier
     {
         return Identifier::{static::class}();
     }
@@ -38,12 +38,12 @@ abstract class Model
      */
     public static function getProperties()
     {
-        if(!is_null(static::$properties))
+        if (!is_null(static::$properties))
         {
             return static::$properties;
         }
 
-        $the_class = static::class;//get_called_class();
+        $the_class = static::class; //get_called_class();
         $result = [];
         $the_class_vars = get_class_vars($the_class);
         // print_r($the_class_vars);
@@ -62,7 +62,7 @@ abstract class Model
 
     protected static function handleSchema()
     {
-        if(static::$schema_is_handled)
+        if (static::$schema_is_handled)
         {
             return;
         }
@@ -71,7 +71,7 @@ abstract class Model
         $property_list = static::getProperties();
         $column_list = [];
         $column_defs = [];
-        
+
         foreach ($property_list as $p)
         {
             $p_var = static::${$p};
@@ -82,7 +82,7 @@ abstract class Model
         }
 
         // Handle the table
-        if(!static::$db->tableExists($table_name))
+        if (!static::$db->tableExists($table_name))
         {
             $q = static::$db->getConnection()->addTableQuery($table_name, $column_defs);
             static::$db->query($q);
@@ -96,7 +96,7 @@ abstract class Model
         foreach ($column_list as $c)
         {
             $column_exists = static::$db->columnExists($table_name, $c[0]);
-            if(!$column_exists)
+            if (!$column_exists)
             {
                 $q = static::$db->getConnection()->addColumnQuery($table_name, $c[0], $c[1], $c[2]);
                 static::$db->query($q);

@@ -10,7 +10,7 @@ enum HTTPStatus: int
     case PROCESSING = 102;
     case EARLY_HINTS = 103;
 
-    // Successful responses (200–299)
+        // Successful responses (200–299)
     case OK = 200;
     case CREATED = 201;
     case ACCEPTED = 202;
@@ -22,7 +22,7 @@ enum HTTPStatus: int
     case ALREADY_REPORTED = 208;
     case IM_USED = 226;
 
-    // Redirection messages (300–399)
+        // Redirection messages (300–399)
     case MULTIPLE_CHOICES = 300;
     case MOVED_PERMANENTLY = 301;
     case FOUND = 302;
@@ -32,7 +32,7 @@ enum HTTPStatus: int
     case TEMPORARY_REDIRECT = 307;
     case PERMANENT_REDIRECT = 308;
 
-    // Client error responses (400–499)
+        // Client error responses (400–499)
     case BAD_REQUEST = 400;
     case UNAUTHORIZED = 401;
     case PAYMENT_REQUIRED = 402;
@@ -63,7 +63,7 @@ enum HTTPStatus: int
     case REQUEST_HEADER_FIELDS_TOO_LARGE = 431;
     case UNAVAILABLE_FOR_LEGAL_REASONS = 451;
 
-    // Server error responses (500–599)
+        // Server error responses (500–599)
     case INTERNAL_SERVER_ERROR = 500;
     case NOT_IMPLEMENTED = 501;
     case BAD_GATEWAY = 502;

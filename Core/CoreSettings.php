@@ -16,4 +16,3 @@ class CoreSettings
     const defaultController = 'Index';
     const defaultMethod = 'index';
 }
-

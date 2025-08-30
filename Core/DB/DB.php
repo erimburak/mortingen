@@ -27,7 +27,7 @@ class DB
 
         $this->connection = $connection;
 
-        if(is_null(static::$db))
+        if (is_null(static::$db))
         {
             static::$db = $this;
         }
@@ -198,5 +198,4 @@ class DB
         $errorInfo = $this->pdo->errorInfo();
         return isset($errorInfo[1]) ? (int)$errorInfo[1] : null;
     }
-
 }

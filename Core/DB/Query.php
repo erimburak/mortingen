@@ -136,7 +136,7 @@ final class Query
     {
         $this->parts[] = [
             'keyword' => "LIKE",
-            'content' => $this->prepareParam( new \DB\Param( $this->escapeForLike($value) ) )
+            'content' => $this->prepareParam(new \DB\Param($this->escapeForLike($value)))
         ];
         $this->parts[] = [
             'keyword' => "ESCAPE",

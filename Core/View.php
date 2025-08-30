@@ -69,5 +69,4 @@ class View
         }
         return new self($result);
     }
-
 }

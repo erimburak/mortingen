@@ -90,8 +90,8 @@ class Index extends Controller
         $Q = "\DB\Query";
 
         //$q = $Q::select("*")->from(\DB\Identifier::{"MyTable"}())->where(\DB\Identifier::{"Username"}(), "=", new \DB\Param("my name"));
-        
-        $q = $Q::select("*")->from(\DB\Identifier::{"MyTable"}())->where(\DB\Identifier::{"Username"}(), "=", new \DB\Param("my name"))->and(\DB\Identifier::{"Name"}(), "LIKE", new \DB\Param("%search name"))->and( $Q::_(\DB\Identifier::{"Name"}())->likeEscape( new \DB\Param("%search name_") ) );
+
+        $q = $Q::select("*")->from(\DB\Identifier::{"MyTable"}())->where(\DB\Identifier::{"Username"}(), "=", new \DB\Param("my name"))->and(\DB\Identifier::{"Name"}(), "LIKE", new \DB\Param("%search name"))->and($Q::_(\DB\Identifier::{"Name"}())->likeEscape(new \DB\Param("%search name_")));
 
         echo $q;
         echo "<br>\n";

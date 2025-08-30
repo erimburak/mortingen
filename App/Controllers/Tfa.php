@@ -11,7 +11,7 @@ class Tfa extends Controller
     {
         TwoFactorAuth::generateSession();
         // $this->response->setContent(TwoFactorAuth::getSecret());
-        $data = TwoFactorAuth::qrData("username","domain",TwoFactorAuth::getSecret(),"issuer");
+        $data = TwoFactorAuth::qrData("username", "domain", TwoFactorAuth::getSecret(), "issuer");
 
         $qr = \QRCode\Generator::generateQrCode($data);
         $this->response->setContentType(\Response\ContentType::IMAGE_PNG);

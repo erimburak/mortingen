@@ -115,7 +115,7 @@ class Response
 
     public function send(): void
     {
-        if($this->sent)
+        if ($this->sent)
         {
             return;
         }

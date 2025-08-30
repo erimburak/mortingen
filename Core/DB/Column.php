@@ -12,7 +12,6 @@ class Column extends Identifier
         private string $definition = '' // e.g. 'UNSIGNED NOT NULL AUTO_INCREMENT', or any extra SQL
     )
     {
-
     }
 
     public function setName(string $name)

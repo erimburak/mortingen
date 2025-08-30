@@ -6,7 +6,7 @@ abstract class PathHandler
      * This method is called when a path is parsed before determining the route.
      * It may pop a path segment/path segments.
      */
-    abstract public function popper() : void;
+    abstract public function popper(): void;
 
     /**
      * This method is called when a URI is generated.
@@ -18,5 +18,5 @@ abstract class PathHandler
      * 
      * If the popper() method's changes on the path is optional, this method should consider that.
      */
-    abstract public function pusher() : array;
+    abstract public function pusher(): array;
 }

@@ -8,7 +8,7 @@ class App
 
     public static function getAbsoluteProjectPath()
     {
-        if(is_null(static::$absoluteProjectPath))
+        if (is_null(static::$absoluteProjectPath))
         {
             static::$absoluteProjectPath = realpath(dirname(__DIR__));
         }
@@ -17,12 +17,12 @@ class App
 
     public static function getProjectPath()
     {
-        if(is_null(static::$projectPath))
+        if (is_null(static::$projectPath))
         {
             $abspath = static::getAbsoluteProjectPath();
             $docroot = realpath($_SERVER['DOCUMENT_ROOT']);
-            $project_path = str_replace($docroot,'',$abspath);
-            $project_path = str_replace('\\','/',$project_path);
+            $project_path = str_replace($docroot, '', $abspath);
+            $project_path = str_replace('\\', '/', $project_path);
             $project_path = trim($project_path, '/');
             static::$projectPath = $project_path;
         }
@@ -31,7 +31,7 @@ class App
 
     public static function getURIRoot()
     {
-        if(is_null(static::$uriRoot))
+        if (is_null(static::$uriRoot))
         {
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
             $host = $_SERVER['HTTP_HOST'] ?? '';
@@ -44,12 +44,10 @@ class App
 
     public function __construct()
     {
-        
     }
 
     public function run()
     {
         Routing::runController();
     }
-
 }

@@ -2,12 +2,12 @@
 
 class Session
 {
-    public static function start() : void
+    public static function start(): void
     {
         session_start();
     }
 
-    public static function reset() : void
+    public static function reset(): void
     {
         session_unset();
         session_destroy();
@@ -25,7 +25,7 @@ class Session
         $_SESSION[$name] = $value;
     }
 
-    public static function get($name, $defaultValue=null)
+    public static function get($name, $defaultValue = null)
     {
         return $_SESSION[$name] ?? $defaultValue;
     }

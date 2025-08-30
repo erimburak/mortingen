@@ -8,5 +8,3 @@ $app = new App;
 // Routing::registerPathHandler(new PathHandlers\TestPathHandler());
 
 $app->run();
-
-
