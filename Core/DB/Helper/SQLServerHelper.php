@@ -41,4 +41,10 @@ class SQLServerHelper extends BaseHelper
         $cols = implode(",\n    ", $columns);
         return "CREATE TABLE [{$table}] (\n    {$cols}\n){$mod};";
     }
+
+    public function addForeignKeyQuery(string $table, string $column, string $referencedTable, string $referencedColumn): string
+    {
+        $constraintName = "FK_{$table}_{$column}";
+        return "ALTER TABLE [{$table}] ADD CONSTRAINT [{$constraintName}] FOREIGN KEY ([{$column}]) REFERENCES [{$referencedTable}] ([{$referencedColumn}]) ON DELETE CASCADE ON UPDATE CASCADE";
+    }
 }

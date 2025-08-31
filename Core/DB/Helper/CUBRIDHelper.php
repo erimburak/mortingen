@@ -42,4 +42,10 @@ class CUBRIDConnection extends BaseHelper
     {
         return "ALTER TABLE \"{$table}\" ADD COLUMN \"{$column}\" {$type} {$definitions}";
     }
+
+    public function addForeignKeyQuery(string $table, string $column, string $referencedTable, string $referencedColumn): string
+    {
+        $constraintName = "FK_{$table}_{$column}";
+        return "ALTER TABLE \"{$table}\" ADD CONSTRAINT {$constraintName} FOREIGN KEY (\"{$column}\") REFERENCES \"{$referencedTable}\" (\"{$referencedColumn}\")";
+    }
 }
