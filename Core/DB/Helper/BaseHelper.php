@@ -33,4 +33,6 @@ abstract class BaseHelper
     abstract public function addTableQuery(string $table, array $columns, ?string $tableModifiers = null): string;
 
     abstract public function addColumnQuery(string $table, string $column, string $type, string $definitions = ''): string;
+
+    abstract public function addForeignKeyQuery(string $table, string $column, string $referencedTable, string $referencedColumn): string;
 }

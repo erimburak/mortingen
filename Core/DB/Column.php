@@ -2,7 +2,7 @@
 
 namespace DB;
 
-class Column extends Identifier
+class Column
 {
     private string $name;
     private string $table;

@@ -8,6 +8,7 @@ abstract class Model
     protected static bool $initialized = false;
     protected static bool $schema_is_handled = false;
     protected static ?array $properties = null;
+    protected static array $foreignKeys = [];
 
     protected static DB\DB $db;
 
@@ -27,6 +28,23 @@ abstract class Model
     public static function table(): Identifier
     {
         return Identifier::{static::class}();
+    }
+
+    /**
+     * Add a foreign key constraint
+     * 
+     * @param string $column Local column name
+     * @param string $referencedTable Referenced table name
+     * @param string $referencedColumn Referenced column name
+     * @return void
+     */
+    public static function addForeignKey(string $column, string $referencedTable, string $referencedColumn): void
+    {
+        static::$foreignKeys[] = [
+            'column' => $column,
+            'referencedTable' => $referencedTable,
+            'referencedColumn' => $referencedColumn
+        ];
     }
 
     /**
@@ -114,6 +132,26 @@ abstract class Model
             //      let the system handle the schema
             //      and then transfer data from the old column to the new one
             //      manually!
+        }
+
+        // Handle foreign keys
+        if (!empty(static::$foreignKeys))
+        {
+            foreach (static::$foreignKeys as $fk)
+            {
+                try {
+                    $fkQuery = static::$db->getConnection()->addForeignKeyQuery(
+                        $table_name,
+                        $fk['column'],
+                        $fk['referencedTable'],
+                        $fk['referencedColumn']
+                    );
+                    static::$db->query($fkQuery);
+                } catch (\Exception $e) {
+                    // Foreign key constraint may already exist, ignore the error
+                    // echo "Foreign key constraint error: " . $e->getMessage();
+                }
+            }
         }
 
         // echo "HANDLED!";

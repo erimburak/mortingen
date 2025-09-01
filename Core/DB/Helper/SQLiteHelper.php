@@ -36,4 +36,11 @@ class SQLiteHelper extends BaseHelper
         $cols = implode(",\n    ", $columns);
         return "CREATE TABLE \"{$table}\" (\n    {$cols}\n){$mod};";
     }
+
+    public function addForeignKeyQuery(string $table, string $column, string $referencedTable, string $referencedColumn): string
+    {
+        // SQLite has limited support for foreign keys and doesn't support adding them after table creation
+        // Return an empty query or throw an exception to indicate this operation is not supported
+        throw new \RuntimeException('SQLite does not support adding foreign key constraints after table creation');
+    }
 }
