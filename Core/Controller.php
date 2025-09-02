@@ -36,7 +36,7 @@ abstract class Controller
 
         for ($i = 0; $i < $methods_num; $i++)
         {
-            if ($current_method == $methods[$i])
+            if ($current_method->value == $methods[$i])
             {
                 return;
             }
