@@ -239,7 +239,7 @@ class TestForm extends Controller
                 'ca' => 'Canada',
                 'au' => 'Australia',
                 'jp' => 'Japan'
-            ])
+            ], [], 'tr')
             ->textarea('reg_bio', 'Bio', 'Tell us about yourself...', '')
             ->checkbox('reg_terms', 'I agree to terms and conditions', '', '1', ['required' => true])
             ->submit('Register', ['class' => 'is-success']);
@@ -283,7 +283,7 @@ class TestForm extends Controller
                 'option3' => 'Option 3',
                 'option4' => 'Long Option Text to Test Dropdown Width',
                 'option5' => 'Another Option'
-            ])
+            ], [], 'option3')
             ->checkbox('checkbox_input', 'Checkbox Input')
             ->radio('radio_input', 'Radio Option 1', '', 'value1')
             ->radio('radio_input', 'Radio Option 2', '', 'value2')

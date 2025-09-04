@@ -25,9 +25,12 @@ abstract class Model
         }
     }
 
-    public static function table(): Identifier
-    {
-        return Identifier::{static::class}();
+    public static function table(): string
+    {   
+        $className = Identifier::{static::class}();
+        $className = basename(str_replace('\\', '/', $className));
+
+        return $className;
     }
 
     /**
@@ -70,7 +73,7 @@ abstract class Model
             if (isset($the_class::$$the_varname) && ($the_class::$$the_varname instanceof DB\Column))
             {
                 $the_class::$$the_varname->setName($the_varname);
-                $the_class::$$the_varname->setTable($the_class);
+                $the_class::$$the_varname->setTable(static::table());
                 $result[] = $the_varname;
             }
         }
@@ -85,7 +88,7 @@ abstract class Model
             return;
         }
 
-        $table_name = static::class;
+        $table_name = static::table();
         $property_list = static::getProperties();
         $column_list = [];
         $column_defs = [];
@@ -103,6 +106,7 @@ abstract class Model
         if (!static::$db->tableExists($table_name))
         {
             $q = static::$db->getConnection()->addTableQuery($table_name, $column_defs);
+            error_log("Creating table with query: " . $q);
             static::$db->query($q);
 
             // echo static::$db->lastQuery;

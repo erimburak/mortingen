@@ -3,32 +3,27 @@
 namespace Models;
 
 use Model;
+use DB\Column;
 
 class Post extends Model
 {
+    public static Column $id;
+    public static Column $title;
+    public static Column $content;
+    public static Column $user_id;
+    public static Column $created_at;
+    public static Column $updated_at;
+
     public static function setup()
     {
-        // Manual table creation will be handled in init
-    }
+        self::$id = new Column('INT', 'UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY');
+        self::$title = new Column('VARCHAR(255)', 'NOT NULL');
+        self::$content = new Column('TEXT', 'NOT NULL');
+        self::$user_id = new Column('INT', 'UNSIGNED NOT NULL');
+        self::$created_at = new Column('TIMESTAMP', 'DEFAULT CURRENT_TIMESTAMP');
+        self::$updated_at = new Column('TIMESTAMP', 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP');
 
-    public static function init(?\DB\DB $db)
-    {
-        $db = $db ?? \DB\DB::$db;
-        
-        // Create posts table manually with foreign key
-        $createTable = "
-            CREATE TABLE IF NOT EXISTS `models\\post` (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                `title` VARCHAR(255) NOT NULL,
-                `content` TEXT NOT NULL,
-                `user_id` INT UNSIGNED NOT NULL,
-                `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                INDEX `idx_user_id` (`user_id`),
-                CONSTRAINT `fk_post_user_id` FOREIGN KEY (`user_id`) REFERENCES `models\\user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-        ";
-        
-        $db->query($createTable);
+        self::addForeignKey('user_id', 'user', 'id');
     }
+    
 }

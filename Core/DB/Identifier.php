@@ -12,7 +12,7 @@ namespace DB;
  * $userTable = Identifier::Users();
  * echo $userTable; // Outputs: Users
  */
-final class Identifier
+class Identifier
 {
     /**
      * The internal value of the identifier.
